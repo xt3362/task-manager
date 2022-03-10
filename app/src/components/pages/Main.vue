@@ -1,13 +1,17 @@
 <script setup>
-import { MainContentType } from '../../models/MainContentType';
+import { ref } from 'vue';
 import SideBar from '../commons/SideBar.vue';
 import MainContent from './MainContent.vue';
-const props = defineProps({
-    contentType: Number 
-});
-const emits = defineEmits(['toggleContentEvent']);
+let contentType = ref(0);
+const toggleContentEvent = (...args) => {
+    contentType.value = args[0];
+};
 </script>
 <template>
-<SideBar />
-<MainContent></MainContent>
+<SideBar
+    @toggleContent="toggleContentEvent">
+</SideBar>
+<MainContent
+    :contentType="contentType">
+</MainContent>
 </template>
