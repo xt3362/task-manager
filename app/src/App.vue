@@ -1,11 +1,11 @@
 <script setup>
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import SideBar from './components/commons/SideBar.vue';
+import Main from './components/Pages/Main.vue';
 </script>
 
 <template>
-  <SideBar />
+  <Main />
 </template>
 
 <style lang="scss">

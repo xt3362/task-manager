@@ -1,7 +1,11 @@
 <script setup>
 import { ref } from 'vue';
 import { MainContentType } from '../../models/MainContentType';
+const emits = defineEmits(['toggleContent']);
 const activeContentType = ref(MainContentType.Home);
+const toggleContent = (value) => {
+    activeContentType.value = value; 
+};
 </script>
 <template>
     <aside class="column is-2 is-fullheight section has-background-dark">
