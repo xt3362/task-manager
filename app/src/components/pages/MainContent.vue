@@ -1,5 +1,6 @@
 <script setup>
 import { MainContentType } from '../../models/MainContentType';
+import TaskRegistor from './TaskRegistor.vue';
 const props = defineProps({
     contentType: Number 
 });
@@ -9,7 +10,7 @@ const props = defineProps({
 Home
 </div>
 <div v-if="props.contentType == MainContentType.TaskRegistor">
-タスク登録
+<TaskRegistor></TaskRegistor>
 </div>
 <div v-if="props.contentType == MainContentType.Daily">
 日ごと
