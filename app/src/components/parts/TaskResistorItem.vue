@@ -5,7 +5,7 @@ const props = defineProps({
 
 </script>
 <template>
-    <div class="row">
+    <div class="columns">
         <div class="column">
             {{props.task.name}}
         </div>

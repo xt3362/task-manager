@@ -8,10 +8,12 @@ const toggleContentEvent = (...args) => {
 };
 </script>
 <template>
-<SideBar
-    @toggleContent="toggleContentEvent">
-</SideBar>
-<MainContent
-    :contentType="contentType">
-</MainContent>
+    <div class="columns">
+        <div class="column is-2">
+            <SideBar @toggleContent="toggleContentEvent"></SideBar>
+        </div>
+        <div class="column is-9 p-4">
+            <MainContent :contentType="contentType"></MainContent>
+        </div>
+    </div>
 </template>

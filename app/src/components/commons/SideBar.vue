@@ -9,7 +9,7 @@ const toggleContent = (value) => {
 }
 </script>
 <template>
-    <aside class="column is-2 is-fullheight section has-background-dark">
+    <aside class="column is-fullheight section has-background-dark">
         <p class="menu-label has-text-white">Navigation</p>
         <ul class="menu-list">
             <li>
