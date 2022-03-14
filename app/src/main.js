@@ -5,9 +5,15 @@ import App from './App.vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+//modal
+import 'vue-universal-modal/dist/index.css'
+import VueUniversalModal from 'vue-universal-modal'
 
 library.add(fas);
 
 let app = createApp(App);
 app.component('font-awesome-icon', FontAwesomeIcon);
-app.mount('#app')
+app.use(VueUniversalModal, {
+    teleportTarget: '#modals'
+});
+app.mount('#app');
