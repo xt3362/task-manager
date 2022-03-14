@@ -5,7 +5,7 @@ const props = defineProps({
 
 </script>
 <template>
-    <div class="columns box m-2">
+    <div class="row columns box m-2">
         <div class="column is-1 draggable p-auto m-auto">
             <font-awesome-icon icon="grip-vertical" />
         </div>
