@@ -2,6 +2,8 @@
 import { ref, reactive } from 'vue';
 import TaskResistorItem from '../parts/TaskResistorItem.vue';
 import draggable from 'vuedraggable'
+import TaskResistorModal from '../parts/TaskResistorModal.vue';
+import {IntervalType} from '../../models/IntervalType';
 
 let drag = ref(false);
 const tasks = reactive([
@@ -11,7 +13,8 @@ const tasks = reactive([
         description: "筋トレ",
         start: new Date(2022, 1, 1),
         end: new Date(2022, 2, 1),
-        type: "monthly"
+        intervalType: IntervalType.Monthly,
+        intervalNumber: 1,
     },
     {
         id: 2,
@@ -19,7 +22,8 @@ const tasks = reactive([
         description: "資格勉強",
         start: new Date(2022, 1, 1),
         end: new Date(2022, 2, 1),
-        type: "monthly"
+        intervalType: IntervalType.Weekly,
+        intervalNumber: 1,
     },
     {
         id: 3,
@@ -27,7 +31,8 @@ const tasks = reactive([
         description: "hogee",
         start: new Date(2022, 1, 1),
         end: new Date(2022, 2, 1),
-        type: "monthly"
+        intervalType: IntervalType.Daily,
+        intervalNumber: 14,
     }
 ]);
 const addTask = () => {
@@ -37,7 +42,7 @@ const addTask = () => {
         description: "説明",
         start: new Date(2022,1,1),
         end: new Date(2022,3,1),
-        type:"weekly"
+        intervalType: IntervalType.Weekly,
     };
     tasks.push(newTask);
 };
@@ -64,5 +69,6 @@ const addTask = () => {
         <footer class="row">
             <button type="button" class="button is-primary" @click="addTask">Add</button>
         </footer>
+        <TaskResistorModal></TaskResistorModal>
     </div>
 </template>
