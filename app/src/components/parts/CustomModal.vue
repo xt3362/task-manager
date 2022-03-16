@@ -1,7 +1,12 @@
 <script setup>
 import { ref } from 'vue';
 const isShow = ref(false)
-
+const props = defineProps({
+    confirmEvent:{
+        type: Function,
+        required: true
+    }
+});
 const showModal = () => {
     isShow.value = true
 };
@@ -26,7 +31,7 @@ const closeModal = () => {
                 <slot name="content"></slot>
             </section>
             <footer class="modal-card-foot">
-                <button class="button is-success">Save changes</button>
+                <button class="button is-success" @click="props.confirmEvent">Confirm</button>
                 <button class="button">Cancel</button>
             </footer>
         </div>

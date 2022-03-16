@@ -1,8 +1,12 @@
 <script setup>
 import CustomModal from "./CustomModal.vue";
+const confirm = () => {
+    alert("保存しました");
+};
 </script>
 <template>
-<CustomModal>
+<CustomModal
+    :confirmEvent="confirm">
     <template v-slot:title>
         新規登録
     </template>
