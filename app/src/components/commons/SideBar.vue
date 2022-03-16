@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { MainContentType } from '../../models/MainContentType';
+import { MainContentType } from '../../models/Constant';
 const emits = defineEmits(['toggleContent']);
 const activeContentType = ref(MainContentType.Home);
 const toggleContent = (value) => {

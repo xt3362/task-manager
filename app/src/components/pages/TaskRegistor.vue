@@ -3,7 +3,7 @@ import { ref, reactive } from 'vue';
 import TaskResistorItem from '../parts/TaskResistorItem.vue';
 import draggable from 'vuedraggable'
 import TaskResistorModal from '../parts/TaskResistorModal.vue';
-import {IntervalType} from '../../models/IntervalType';
+import {IntervalType} from '../../models/Constant';
 
 let drag = ref(false);
 const tasks = reactive([
