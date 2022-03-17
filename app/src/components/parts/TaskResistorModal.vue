@@ -3,14 +3,15 @@ import { reactive } from "vue";
 import CustomModal from "./CustomModal.vue";
 import TaskMasterModel from "../../models/TaskMasterModel";
 import { taskMasterRepository } from "../../repositories/TaskMasterRepository";
+import IntervalTypeSelector from "./IntervalTypeSelector.vue";
 const emits = defineEmits(['updateTaskEvent']);
-const props = defineProps({
-    updateTask: Function
-});
-const taskMaster = reactive(new TaskMasterModel());
+let taskMaster = reactive(new TaskMasterModel());
 const confirm = () => {
     taskMasterRepository.add(taskMaster);
     emits('updateTaskEvent');
+};
+const selectInterval = (...args) => {
+    taskMaster.intervalType = args[0];
 };
 </script>
 <template>
@@ -33,6 +34,7 @@ const confirm = () => {
                 <label class="label">終了</label>
                 <input v-model="taskMaster.end" type="date" placeholder="end" class="input" />
             </div>
+            <IntervalTypeSelector @selectEvent="selectInterval"></IntervalTypeSelector>
         </template>
     </CustomModal>
 </template>
