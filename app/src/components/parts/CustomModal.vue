@@ -13,6 +13,14 @@ const showModal = () => {
 const closeModal = () => {
     isShow.value = false
 };
+const confirm = () => {
+    props.confirmEvent();
+    closeModal();
+};
+const cancel = () => {
+    closeModal();
+};
+
 </script>
 <template>
     <p>
@@ -31,8 +39,8 @@ const closeModal = () => {
                 <slot name="content"></slot>
             </section>
             <footer class="modal-card-foot">
-                <button class="button is-success" @click="props.confirmEvent">Confirm</button>
-                <button class="button">Cancel</button>
+                <button class="button is-success" @click="confirm">Confirm</button>
+                <button class="button" @click="cancel">Cancel</button>
             </footer>
         </div>
     </Modal>

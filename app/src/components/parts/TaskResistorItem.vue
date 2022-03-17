@@ -1,4 +1,6 @@
 <script setup>
+import TaskMasterModel from '../../models/TaskMasterModel';
+
 const props = defineProps({
     task: Object
 });

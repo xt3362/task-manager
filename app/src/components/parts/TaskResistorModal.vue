@@ -3,10 +3,14 @@ import { reactive } from "vue";
 import CustomModal from "./CustomModal.vue";
 import TaskMasterModel from "../../models/TaskMasterModel";
 import { taskMasterRepository } from "../../repositories/TaskMasterRepository";
+const emits = defineEmits(['updateTaskEvent']);
+const props = defineProps({
+    updateTask: Function
+});
 const taskMaster = reactive(new TaskMasterModel());
 const confirm = () => {
-    alert(taskMaster.name);
     taskMasterRepository.add(taskMaster);
+    emits('updateTaskEvent');
 };
 </script>
 <template>

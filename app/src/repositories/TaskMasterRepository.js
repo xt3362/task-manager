@@ -1,5 +1,12 @@
 import { db } from './db';
 class TaskMasterRepository {
+    async getAll() {
+        try {
+            return await db.taskMasters.toArray();
+        } catch {
+            throw Error("error 'getAll taskMaster'");
+        }
+    }
     async getById(taskId) {
         try {
             return await db.taskMasters.get(taskId);
