@@ -2,7 +2,8 @@
 import { ref } from 'vue';
 import SideBar from '../commons/SideBar.vue';
 import MainContent from './MainContent.vue';
-let contentType = ref(0);
+import { MainContentType } from '../../models/Constant';
+let contentType = ref(MainContentType.Home);
 const toggleContentEvent = (...args) => {
     contentType.value = args[0];
 };

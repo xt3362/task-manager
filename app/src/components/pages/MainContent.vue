@@ -1,5 +1,5 @@
 <script setup>
-import { MainContentType } from '../../models/MainContentType';
+import { MainContentType } from '../../models/Constant';
 import TaskRegistor from './TaskRegistor.vue';
 const props = defineProps({
     contentType: Number
