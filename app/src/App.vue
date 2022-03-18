@@ -11,6 +11,7 @@ import MainPage from './components/pages/MainPage.vue';
 <style lang="scss">
 @import "../node_modules/bulma/bulma.sass";
 @import 'vue-select/dist/vue-select.css';
+@import 'v-calendar/dist/style.css';
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

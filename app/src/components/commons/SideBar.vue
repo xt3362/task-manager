@@ -26,6 +26,17 @@ const toggleContent = (value) => {
             <li>
                 <a
                     href="#"
+                    :class="{ 'is-active': activeContentType == MainContentType.Calendar }"
+                    @click="toggleContent(MainContentType.Calendar)"
+                >
+                    <span class="icon">
+                        <i class="fa fa-home"></i>
+                    </span> カレンダー
+                </a>
+            </li>
+            <li>
+                <a
+                    href="#"
                     :class="{ 'is-active': activeContentType == MainContentType.TaskRegistor }"
                     @click="toggleContent(MainContentType.TaskRegistor)"
                 >

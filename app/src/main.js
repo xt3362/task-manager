@@ -10,8 +10,14 @@ import 'vue-universal-modal/dist/index.css'
 import VueUniversalModal from 'vue-universal-modal'
 //vue-select
 import vSelect from 'vue-select'
+//v-calendar
+import VCalendar from 'v-calendar';
+
+// Use plugin with defaults
 
 let app = createApp(App);
+
+app.use(VCalendar, {})
 
 app.component('v-select', vSelect)
 

@@ -10,6 +10,7 @@ const MainContentType = {
     Daily: 3,
     Weekly: 4,
     Monthly: 5,
+    Calendar: 6,
 };
 const inputType = {
     Toggle: 1,
