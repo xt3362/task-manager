@@ -7,6 +7,9 @@ import { taskMasterRepository } from '../../repositories/TaskMasterRepository';
 
 let drag = ref(false);
 const tasks = ref([]);
+const isShow = ref(false);
+const showModal = () => isShow.value = true;
+const hideModal = () => isShow.value = false;
 const updateTask = async () => {
     tasks.value = await taskMasterRepository.getAll();
 };
@@ -17,6 +20,7 @@ watchEffect((tasks), updateTask);
 <template>
     <div class="rows">
         <button type="button" @click="updateTask">更新</button>
+        <button type="button" class="button is-primary" @click="showModal">タスク追加</button>
         <div class="row columns">
             <span class="column is-2">タスク登録</span>
             <span class="column is-8">{{ drag }}</span>
@@ -34,9 +38,12 @@ watchEffect((tasks), updateTask);
                 <TaskResistorItem :task="element"></TaskResistorItem>
             </template>
         </draggable>
-        <footer class="row">
-            <button type="button" class="button is-primary" @click="addTask">Add</button>
-        </footer>
-        <TaskResistorModal @updateTaskEvent="updateTask"></TaskResistorModal>
+        <TaskResistorModal
+            v-if="isShow"
+            :isShow="isShow"
+            :showModal="showModal"
+            :hideModal="hideModal"
+            @updateTaskEvent="updateTask"
+        ></TaskResistorModal>
     </div>
 </template>
