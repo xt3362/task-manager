@@ -1,10 +1,22 @@
 import { db } from './db';
+import { formatDate } from '../utils/DateUtil';
 class TaskMasterRepository {
     async getAll() {
         try {
             return await db.taskMasters.toArray();
         } catch {
             throw Error("error 'getAll taskMaster'");
+        }
+    }
+    async getByDate(start, end) {
+        try {
+            return await db.taskMasters
+                .where('start')
+                .belowOrEqual(formatDate(end))
+                .and(item => Date.parse(item.end) >= Date.parse(start))
+                .toArray();
+        } catch {
+            throw Error("error 'getByDate taskMaster'");
         }
     }
     async getById(taskId) {
