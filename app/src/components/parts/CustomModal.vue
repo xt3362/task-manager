@@ -2,7 +2,7 @@
 const props = defineProps({
     confirmEvent:{
         type: Function,
-        required: true
+        required: false
     },
     showModal:{
         type: Function,
@@ -36,19 +36,9 @@ const confirm = () => {
                 <slot name="content"></slot>
             </section>
             <footer class="modal-card-foot">
-                <button class="button is-success" @click="confirm">Confirm</button>
+                <button v-if="confirmEvent != undefined" class="button is-success" @click="confirm">Confirm</button>
                 <button class="button" @click="props.hideModal">Cancel</button>
             </footer>
         </div>
     </Modal>
 </template>
-<style scoped lang="scss">
-.myModal {
-    width: 300px;
-    padding: 30px;
-    box-sizing: border-box;
-    background-color: #fff;
-    font-size: 20px;
-    text-align: center;
-}
-</style>
