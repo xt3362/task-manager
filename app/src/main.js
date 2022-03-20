@@ -12,11 +12,12 @@ import VueUniversalModal from 'vue-universal-modal'
 import vSelect from 'vue-select'
 //v-calendar
 import VCalendar from 'v-calendar';
-
-// Use plugin with defaults
+//router
+import router from './router';
 
 let app = createApp(App);
 
+app.use(router);
 app.use(VCalendar, {})
 
 app.component('v-select', vSelect)

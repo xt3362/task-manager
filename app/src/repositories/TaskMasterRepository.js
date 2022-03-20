@@ -8,12 +8,24 @@ class TaskMasterRepository {
             throw Error("error 'getAll taskMaster'");
         }
     }
-    async getByDate(start, end) {
+    async getByStartEnd(start, end) {
         try {
             return await db.taskMasters
                 .where('start')
                 .belowOrEqual(formatDate(end))
                 .and(item => Date.parse(item.end) >= Date.parse(start))
+                .toArray();
+        } catch {
+            throw Error("error 'getByDate taskMaster'");
+        }
+    }
+    async getByDate(date) {
+        console.log(formatDate(date));
+        try {
+            return await db.taskMasters
+                .where('start')
+                .belowOrEqual(formatDate(date))
+                .and(item => Date.parse(item.end) >= Date.parse(date))
                 .toArray();
         } catch {
             throw Error("error 'getByDate taskMaster'");

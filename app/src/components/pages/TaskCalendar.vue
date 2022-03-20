@@ -7,20 +7,10 @@ const year = new Date().getFullYear();
 const masks = {
   weekdays: 'WWW',
 };
-// const attributes = [
-//   {
-//     key: 1,
-//     customData: {
-//       title: 'Lunch with mom.',
-//       class: 'day1',
-//     },
-//     dates: new Date(year, month, 1),
-//   }
-// ];
 const updateDisplayDate = async (calendarDate) => {
   const start = new Date(calendarDate.year, calendarDate.month - 1, 1);//月初
   const end = new Date(calendarDate.year, calendarDate.month, 0);//月末
-  const taskData = await taskMasterRepository.getByDate(start, end);
+  const taskData = await taskMasterRepository.getByStartEnd(start, end);
   const dateData = taskData.map(task => {
     const taskStart = new Date(task.start);
     const taskEnd = new Date(task.end);
