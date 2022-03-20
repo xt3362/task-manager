@@ -47,11 +47,19 @@ class TaskMasterRepository {
             throw Error("error 'add taskMaster'");
         }
     }
-    async delete(taskId) {
-        return await db.taskMasters.delete(taskId);
+    async deleteById(taskId) {
+        try {
+            return await db.taskMasters.delete(taskId);
+        } catch {
+            throw Error("error 'add taskMaster'");
+        }
     }
     async delete(taskIds) {
-        return await db.taskMasters.bulkDelete(taskIds);
+        try {
+            return await db.taskMasters.bulkDelete(taskIds);
+        } catch {
+            throw Error("error 'add taskMaster'");
+        }
     }
 }
 export const taskMasterRepository = new TaskMasterRepository();

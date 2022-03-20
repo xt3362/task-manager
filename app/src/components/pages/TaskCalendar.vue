@@ -1,31 +1,42 @@
 <script setup>
 import { ref } from 'vue';
 import { taskMasterRepository } from '../../repositories/TaskMasterRepository';
-const tasks = ref([]);
+const attributes = ref([]);
 const month = new Date().getMonth();
 const year = new Date().getFullYear();
 const masks = {
   weekdays: 'WWW',
 };
-const attributes = [
-  {
-    key: 1,
-    customData: {
-      title: 'Lunch with mom.',
-      class: 'day1',
-    },
-    dates: new Date(year, month, 1),
-  }
-];
+// const attributes = [
+//   {
+//     key: 1,
+//     customData: {
+//       title: 'Lunch with mom.',
+//       class: 'day1',
+//     },
+//     dates: new Date(year, month, 1),
+//   }
+// ];
 const updateDisplayDate = async (calendarDate) => {
   const start = new Date(calendarDate.year, calendarDate.month - 1, 1);//月初
   const end = new Date(calendarDate.year, calendarDate.month, 0);//月末
-  // const startString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDay()}}`
-  // date.setMonth(date.getMonth() + 1);
-  // date.setDate(0); //月末
-  // const endString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDay()}}`
-  tasks.value = await taskMasterRepository.getByDate(start, end);
-  console.log(tasks.value);
+  const taskData = await taskMasterRepository.getByDate(start, end);
+  const dateData = taskData.map(task => {
+    const taskStart = new Date(task.start);
+    const taskEnd = new Date(task.end);
+    const days = (taskEnd - taskStart) / (24 * 60 * 60 * 1000) + 1;
+    return [...Array(days).keys()].map(i => {
+      return {
+        key: task.id,
+        customData: {
+          title: task.name,
+          class: 'task-center'
+        },
+        dates: new Date(taskStart.getFullYear(), taskStart.getMonth(), taskStart.getDate() + i)
+      }
+    });
+  });
+  attributes.value = dateData.flat();
 }
 </script>
 <template>
@@ -41,13 +52,12 @@ const updateDisplayDate = async (calendarDate) => {
       <template v-slot:day-content="{ day, attributes }">
         <div class="day-container">
           <span class="day-header">{{ day.day }}</span>
-          <div class>
+          <div>
             <p
-              v-for="attr in attributes"
-              :key="attr.key"
-              class="day-item"
-              :class="attr.customData.class"
-            >{{ attr.customData.title }}</p>
+              v-for="task in attributes"
+              :key="task.key"
+              :class="task.customData.class"
+            >{{ task.customData.title }}</p>
           </div>
         </div>
       </template>
@@ -83,5 +93,19 @@ const updateDisplayDate = async (calendarDate) => {
 }
 .is-not-in-month {
   background-color: rgba(168, 168, 168, 0.253);
+}
+.task-right-end {
+  border-bottom: 1px solid rgba(61, 60, 60, 0.438);
+  border-right: 1px solid rgba(61, 60, 60, 0.438);
+}
+.task-left-end {
+  border-bottom: 1px solid rgba(61, 60, 60, 0.438);
+  border-left: 1px solid rgba(61, 60, 60, 0.438);
+}
+.task-center {
+  border-bottom: 1px solid rgba(61, 60, 60, 0.438);
+}
+.task-top {
+  border-top: 1px solid rgba(61, 60, 60, 0.438);
 }
 </style>
