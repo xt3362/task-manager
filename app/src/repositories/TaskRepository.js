@@ -1,4 +1,5 @@
 import { db } from './db';
+import { formatDate } from '../utils/DateUtil';
 class TaskRepository {
     async getById(taskId) {
         try {
@@ -12,6 +13,18 @@ class TaskRepository {
             return await db.tasks.bulkGet(taskIds);
         } catch {
             throw Error("error 'get tasks'");
+        }
+    }
+    async getByDate(date) {
+        console.log(formatDate(date));
+        try {
+            return await db.tasks
+                .where('start')
+                .belowOrEqual(formatDate(date))
+                .and(item => Date.parse(item.end) >= Date.parse(date))
+                .toArray();
+        } catch {
+            throw Error("error 'getByDate task'");
         }
     }
     async put(task) {
