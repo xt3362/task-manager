@@ -2,8 +2,6 @@
 import { ref } from 'vue';
 import { taskMasterRepository } from '../../repositories/TaskMasterRepository';
 const attributes = ref([]);
-const month = new Date().getMonth();
-const year = new Date().getFullYear();
 const masks = {
   weekdays: 'WWW',
 };
@@ -30,8 +28,7 @@ const updateDisplayDate = async (calendarDate) => {
 }
 </script>
 <template>
-  <div class="text-center section">
-    <h2>Custom Calendars</h2>
+  <div class="container m-1">
     <v-calendar
       :masks="masks"
       :attributes="attributes"
@@ -65,9 +62,12 @@ const updateDisplayDate = async (calendarDate) => {
 .weekday-7 {
   background-color: rgba(26, 175, 201, 0.089);
 }
+.is-today{
+  background-color: rgba(221, 235, 30, 0.089);
+}
 .day-container {
   width: 13.5rem;
-  height: 8rem;
+  height: 10rem;
   border-bottom: 1px solid grey;
   border-left: 1px solid grey;
 }
@@ -93,7 +93,10 @@ const updateDisplayDate = async (calendarDate) => {
   border-left: 1px solid rgba(61, 60, 60, 0.438);
 }
 .task-center {
-  border-bottom: 1px solid rgba(61, 60, 60, 0.438);
+  border: 1px solid rgba(61, 60, 60, 0.438);
+  border-radius: 5px;
+  margin-left: 2px;
+  margin-right: 2px;
 }
 .task-top {
   border-top: 1px solid rgba(61, 60, 60, 0.438);

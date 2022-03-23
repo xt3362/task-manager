@@ -10,20 +10,23 @@ const tasks = ref([]);
 const isShow = ref(false);
 const showModal = () => isShow.value = true;
 const hideModal = () => isShow.value = false;
+const deleteTask = async (taskId) => {
+    if (confirm("本当に削除しますか？") == false) return;
+    await taskMasterRepository.deleteById(taskId);
+    updateTask();
+};
 const updateTask = async () => {
     tasks.value = await taskMasterRepository.getAll();
 };
 onMounted(updateTask);
-watchEffect((tasks), updateTask);
-
 </script>
 <template>
     <div class="rows">
-        <button type="button" @click="updateTask">更新</button>
-        <button type="button" class="button is-primary" @click="showModal">タスク追加</button>
         <div class="row columns">
-            <span class="column is-2">タスク登録</span>
-            <span class="column is-8">{{ drag }}</span>
+            <span class="column is-2">
+                <button type="button" class="button is-primary" @click="showModal">新規追加</button>
+            </span>
+            <span class="column is-8"></span>
             <span class="column is-2">タスク数：{{ tasks.length }}</span>
         </div>
         <draggable
@@ -35,7 +38,7 @@ watchEffect((tasks), updateTask);
             class="rows"
         >
             <template #item="{ element }">
-                <TaskResistorItem :task="element"></TaskResistorItem>
+                <TaskResistorItem :task="element" :delete-task="deleteTask"></TaskResistorItem>
             </template>
         </draggable>
         <TaskResistorModal
