@@ -65,21 +65,14 @@ const updateDisplayDate = async (calendarDate) => {
 .is-today{
   background-color: rgba(221, 235, 30, 0.089);
 }
+.vc-day{
+  border: 1px solid rgba(0, 0, 0, 0.103);
+  border-radius: 5px;
+}
 .day-container {
-  width: 13.5rem;
-  height: 10rem;
-  border-bottom: 1px solid grey;
-  border-left: 1px solid grey;
 }
 .day-header {
   border-bottom: 1px solid rgb(0, 0, 0);
-}
-.day-item {
-  margin-top: 3px;
-  margin-left: 3px;
-  margin-right: 3px;
-  border: 1px solid rgba(61, 60, 60, 0.438);
-  border-radius: 5px;
 }
 .is-not-in-month {
   background-color: rgba(168, 168, 168, 0.253);
@@ -95,8 +88,9 @@ const updateDisplayDate = async (calendarDate) => {
 .task-center {
   border: 1px solid rgba(61, 60, 60, 0.438);
   border-radius: 5px;
-  margin-left: 2px;
-  margin-right: 2px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 3px;
 }
 .task-top {
   border-top: 1px solid rgba(61, 60, 60, 0.438);
