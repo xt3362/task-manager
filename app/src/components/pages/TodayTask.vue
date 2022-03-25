@@ -5,7 +5,7 @@ import TaskModel from '../../models/TaskModel';
 import { taskMasterRepository } from '../../repositories/TaskMasterRepository';
 import { taskRepository } from '../../repositories/TaskRepository';
 const targetDate = new Date();
-
+const daysLeftMessage = (days) => days == 0 ? '今日まで' : `あと${days}日`;
 const inprogressTasks = ref([]);
 const completedTasks = ref([]);
 const loadTask = async () => {
@@ -50,8 +50,7 @@ const cancelTask = async (taskMaster) => {
                 <div class="tile is-child box">
                     <div class="tile is-child">{{ task.name }}</div>
                     <div class="tile is-child">{{ task.content }}</div>
-                    <div class="tile is-child">{{ task.getStartOfTargetDate(targetDate).toLocaleString() }}</div>
-                    <div class="tile is-child">{{ task.getEndOfTargetDate(targetDate).toLocaleString() }}</div>
+                    <div class="tile is-child">{{ daysLeftMessage(task.getDaysLeft(targetDate)) }}</div>
                     <footer class="tile">
                         <button type="button" class="button is-primary" @click="completeTask(task)">完了</button>
                     </footer>
@@ -64,8 +63,6 @@ const cancelTask = async (taskMaster) => {
                 <div class="tile is-child box">
                     <div class="tile is-child">{{ task.name }}</div>
                     <div class="tile is-child">{{ task.content }}</div>
-                    <div class="tile is-child">{{ task.getStartOfTargetDate(targetDate).toLocaleString() }}</div>
-                    <div class="tile is-child">{{ task.getEndOfTargetDate(targetDate).toLocaleString() }}</div>
                     <footer class="tile">
                         <button type="button" class="button is-danger" @click="cancelTask(task)">取り消し</button>
                     </footer>

@@ -25,6 +25,12 @@ export default class TaskMasterModel {
         end.setTime(end.getTime() + todayEnd * 24 * 60 * 60 * 1000);
         return end;
     }
+    getDaysLeft(date){
+        let end = this.getEndOfTargetDate(date);
+        end = new Date(end.getFullYear(), end.getMonth() , end.getDate())
+        const today = new Date(date.getFullYear(), date.getMonth() , date.getDate());
+        return (end - today) / 86400000;
+    }
     __intervalNumber() {
         let intervalNumber = this.intervalNumber;
         switch (this.intervalType) {
