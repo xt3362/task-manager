@@ -20,8 +20,8 @@ const props = defineProps({
 });
 const emits = defineEmits(['updateTaskEvent']);
 let taskMaster = reactive(new TaskMasterModel());
-const confirm = () => {
-    taskMasterRepository.add(taskMaster);
+const confirm = async () => {
+    await taskMasterRepository.add(taskMaster);
     emits('updateTaskEvent');
 };
 const selectInterval = (...args) => {

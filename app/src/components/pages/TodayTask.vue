@@ -13,7 +13,7 @@ const loadTask = async () => {
     const tasks = await taskRepository.getByDate(targetDate);
     const cTasks = new Array();
     const pTasks = new Array();
-    taskMasters.map((taskMaster, index) => {
+    taskMasters.map((taskMaster) => {
         const completedTask = tasks.find(t => t.taskMasterId == taskMaster.id);
         if (completedTask) {
             cTasks.push(taskMaster);
@@ -36,50 +36,38 @@ const completeTask = async (taskMaster) => {
     await taskRepository.add(newTask);
     loadTask();
 };
+const cancelTask = async (taskMaster) => {
+    const targetTaskIds = await taskRepository.getByTaskMasterId(taskMaster.id);
+    await taskRepository.delete(targetTaskIds.map(t => t.id));
+    loadTask();
+};
 </script>
 <template>
-    <div class="container">
-        <header></header>
-    </div>
-    <div class="tile is-ancestor">
-        <div class="tile is-parent is-vertical">
+    <div class="columns">
+        <div class="column is 6">
+            <header>未完了タスク</header>
             <div v-for="task in inprogressTasks" :key="task.key" class="tile is-parent">
                 <div class="tile is-child box">
                     <div class="tile is-child">{{ task.name }}</div>
                     <div class="tile is-child">{{ task.content }}</div>
-                    <div
-                        class="tile is-child"
-                    >{{ task.getStartOfTargetDate(targetDate).toLocaleString() }}</div>
-                    <div
-                        class="tile is-child"
-                    >{{ task.getEndOfTargetDate(targetDate).toLocaleString() }}</div>
+                    <div class="tile is-child">{{ task.getStartOfTargetDate(targetDate).toLocaleString() }}</div>
+                    <div class="tile is-child">{{ task.getEndOfTargetDate(targetDate).toLocaleString() }}</div>
                     <footer class="tile">
-                        <button
-                            type="button"
-                            class="button is-primary"
-                            @click="completeTask(task)"
-                        >完了</button>
+                        <button type="button" class="button is-primary" @click="completeTask(task)">完了</button>
                     </footer>
                 </div>
             </div>
         </div>
-        <div class="tile is-parent is-vertical">
+        <div class="column is-6 is-parent">
+            <header>完了タスク</header>
             <div v-for="task in completedTasks" :key="task.key" class="tile is-parent">
                 <div class="tile is-child box">
                     <div class="tile is-child">{{ task.name }}</div>
                     <div class="tile is-child">{{ task.content }}</div>
-                    <div
-                        class="tile is-child"
-                    >{{ task.getStartOfTargetDate(targetDate).toLocaleString() }}</div>
-                    <div
-                        class="tile is-child"
-                    >{{ task.getEndOfTargetDate(targetDate).toLocaleString() }}</div>
+                    <div class="tile is-child">{{ task.getStartOfTargetDate(targetDate).toLocaleString() }}</div>
+                    <div class="tile is-child">{{ task.getEndOfTargetDate(targetDate).toLocaleString() }}</div>
                     <footer class="tile">
-                        <button
-                            type="button"
-                            class="button is-primary"
-                            @click="completeTask(task)"
-                        >完了</button>
+                        <button type="button" class="button is-danger" @click="cancelTask(task)">取り消し</button>
                     </footer>
                 </div>
             </div>

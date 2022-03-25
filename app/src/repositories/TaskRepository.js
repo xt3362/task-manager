@@ -15,13 +15,22 @@ class TaskRepository {
             throw Error("error 'get tasks'");
         }
     }
+    async getByTaskMasterId(taskMasterId){
+        try {
+            return await db.tasks
+                .where({taskMasterId: taskMasterId})
+                .toArray();
+        } catch {
+            throw Error("error 'getByTaskMasterId'");
+        }
+    }
     async getByDate(date) {
-        console.log(formatDate(date));
+        const dateString = formatDate(date);
         try {
             return await db.tasks
                 .where('start')
-                .belowOrEqual(formatDate(date))
-                .and(item => Date.parse(item.end) >= Date.parse(date))
+                .belowOrEqual(dateString)
+                .and(item => Date.parse(item.end) >= Date.parse(dateString))
                 .toArray();
         } catch {
             throw Error("error 'getByDate task'");
