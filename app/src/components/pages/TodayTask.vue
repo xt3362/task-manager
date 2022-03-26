@@ -1,11 +1,9 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { compileStyleAsync } from 'vue/compiler-sfc';
 import TaskModel from '../../models/TaskModel';
 import { taskMasterRepository } from '../../repositories/TaskMasterRepository';
 import { taskRepository } from '../../repositories/TaskRepository';
 const targetDate = new Date();
-const daysLeftMessage = (days) => days == 0 ? '今日まで' : `あと${days}日`;
 const inprogressTasks = ref([]);
 const completedTasks = ref([]);
 const loadTask = async () => {
@@ -23,10 +21,9 @@ const loadTask = async () => {
     });
     completedTasks.value = cTasks;
     inprogressTasks.value = pTasks;
+    console.log(tasks)
 };
-onMounted(async () => {
-    await loadTask();
-});
+const daysLeftMessage = (days) => days == 0 ? '今日まで' : `あと${days}日`;
 const completeTask = async (taskMaster) => {
     let newTask = new TaskModel();
     newTask.taskMasterId = taskMaster.id;
@@ -41,6 +38,9 @@ const cancelTask = async (taskMaster) => {
     await taskRepository.delete(targetTaskIds.map(t => t.id));
     loadTask();
 };
+onMounted(async () => {
+    await loadTask();
+});
 </script>
 <template>
     <div class="columns">

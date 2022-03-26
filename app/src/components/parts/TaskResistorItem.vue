@@ -4,7 +4,10 @@ import TaskMasterModel from '../../models/TaskMasterModel';
 const props = defineProps({
     task: {
         type: Object,
-        required: true
+        required: true,
+        validator: (task) => {
+            if (!task.id) return false;
+        }
     },
     deleteTask: {
         type: Function,
@@ -23,7 +26,9 @@ const props = defineProps({
         <div class="column is-2 p-auto m-auto">{{ props.task.end }}</div>
         <div class="column is-2 p-auto m-auto">{{ props.task.type }}</div>
         <div class="column is-1 p-auto m-auto">
-            <button @click="props.deleteTask(props.task.id)" class="button">×</button>
+            <div @click="props.deleteTask(props.task.id)" class="button-delete">
+                <font-awesome-icon icon="trash-can" />
+            </div>
         </div>
     </div>
 </template>
@@ -33,5 +38,8 @@ const props = defineProps({
 }
 .draggable:active {
     cursor: grabbing;
+}
+.button-delete:hover{
+    cursor: pointer;
 }
 </style>
