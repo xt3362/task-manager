@@ -1,14 +1,15 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, watch, ref } from 'vue';
 import TaskModel from '../../models/TaskModel';
 import { taskMasterRepository } from '../../repositories/TaskMasterRepository';
 import { taskRepository } from '../../repositories/TaskRepository';
-const targetDate = new Date();
+const targetDate = ref(new Date());
 const inprogressTasks = ref([]);
 const completedTasks = ref([]);
+
 const loadTask = async () => {
-    const taskMasters = await taskMasterRepository.getByDate(targetDate);
-    const tasks = await taskRepository.getByDate(targetDate);
+    const taskMasters = await taskMasterRepository.getByDate(targetDate.value);
+    const tasks = await taskRepository.getByDate(targetDate.value);
     const cTasks = new Array();
     const pTasks = new Array();
     taskMasters.map((taskMaster) => {
@@ -21,16 +22,19 @@ const loadTask = async () => {
     });
     completedTasks.value = cTasks;
     inprogressTasks.value = pTasks;
-    console.log(tasks)
+    console.log(targetDate.value);
+    console.log(taskMasters);
 };
 const daysLeftMessage = (days) => days == 0 ? '今日まで' : `あと${days}日`;
 const completeTask = async (taskMaster) => {
     let newTask = new TaskModel();
     newTask.taskMasterId = taskMaster.id;
-    newTask.start = taskMaster.getStartOfTargetDate(targetDate);
-    newTask.end = taskMaster.getEndOfTargetDate(targetDate);
+    newTask.start = taskMaster.getStartOfTargetDate(targetDate.value);
+    newTask.end = taskMaster.getEndOfTargetDate(targetDate.value);
+    newTask.completionDate = targetDate.value;
     newTask.count = 1;
     await taskRepository.add(newTask);
+    console.log(newTask);
     loadTask();
 };
 const cancelTask = async (taskMaster) => {
@@ -38,13 +42,18 @@ const cancelTask = async (taskMaster) => {
     await taskRepository.delete(targetTaskIds.map(t => t.id));
     loadTask();
 };
+
+watch(targetDate, () => {
+    loadTask();
+})
 onMounted(async () => {
     await loadTask();
 });
 </script>
 <template>
     <div class="columns">
-        <div class="column is 6">
+        <v-date-picker class="column is-2" mode="date" v-model="targetDate"></v-date-picker>
+        <div class="column is-5">
             <header>未完了タスク</header>
             <div v-for="task in inprogressTasks" :key="task.key" class="tile is-parent">
                 <div class="tile is-child box">
@@ -52,19 +61,28 @@ onMounted(async () => {
                     <div class="tile is-child">{{ task.content }}</div>
                     <div class="tile is-child">{{ daysLeftMessage(task.getDaysLeft(targetDate)) }}</div>
                     <footer class="tile">
-                        <button type="button" class="button is-primary" @click="completeTask(task)">完了</button>
+                        <button
+                            type="button"
+                            class="button is-primary"
+                            @click="completeTask(task)"
+                        >完了</button>
                     </footer>
                 </div>
             </div>
         </div>
-        <div class="column is-6 is-parent">
+        <div class="column is-5 is-parent">
             <header>完了タスク</header>
             <div v-for="task in completedTasks" :key="task.key" class="tile is-parent">
                 <div class="tile is-child box">
                     <div class="tile is-child">{{ task.name }}</div>
                     <div class="tile is-child">{{ task.content }}</div>
+                    <div class="tile is-child">完了！</div>
                     <footer class="tile">
-                        <button type="button" class="button is-danger" @click="cancelTask(task)">取り消し</button>
+                        <button
+                            type="button"
+                            class="button is-danger"
+                            @click="cancelTask(task)"
+                        >取り消し</button>
                     </footer>
                 </div>
             </div>

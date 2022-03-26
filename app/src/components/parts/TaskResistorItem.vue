@@ -6,7 +6,7 @@ const props = defineProps({
         type: Object,
         required: true,
         validator: (task) => {
-            if (!task.id) return false;
+            return true
         }
     },
     deleteTask: {
