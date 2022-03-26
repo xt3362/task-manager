@@ -52,7 +52,9 @@ onMounted(async () => {
 </script>
 <template>
     <div class="columns">
-        <v-date-picker class="column is-2" mode="date" v-model="targetDate"></v-date-picker>
+        <div>
+            <v-date-picker mode="date" v-model="targetDate"></v-date-picker>
+        </div>
         <div class="column is-5">
             <header>未完了タスク</header>
             <div v-for="task in inprogressTasks" :key="task.key" class="tile is-parent">
