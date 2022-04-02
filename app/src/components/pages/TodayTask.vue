@@ -22,8 +22,6 @@ const loadTask = async () => {
     });
     completedTasks.value = cTasks;
     inprogressTasks.value = pTasks;
-    console.log(targetDate.value);
-    console.log(taskMasters);
 };
 const daysLeftMessage = (days) => days == 0 ? '今日まで' : `あと${days}日`;
 const completeTask = async (taskMaster) => {

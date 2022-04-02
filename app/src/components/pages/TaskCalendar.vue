@@ -34,6 +34,7 @@ const updateDisplayDate = async (calendarDate) => {
       :attributes="attributes"
       disable-page-swipe
       is-expanded
+      class="custom-calendar"
       @update:to-page="updateDisplayDate"
     >
       <template v-slot:day-content="{ day, attributes }">
@@ -52,45 +53,34 @@ const updateDisplayDate = async (calendarDate) => {
   </div>
 </template>
 
-<style>
-.day1 {
-  color: red;
+<style scoped>
+.custom-calendar.vc-container ::v-deep(.vc-day) {
+  border: 1px solid rgba(0, 0, 0, 0.103);
+  border-radius: 1px;
+  height: 12vh;
 }
-.weekday-1 {
-  background-color: rgba(201, 26, 26, 0.151);
-}
-.weekday-7 {
-  background-color: rgba(26, 175, 201, 0.089);
-}
-.is-today{
+.custom-calendar.vc-container ::v-deep(.is-today) {
   background-color: rgba(221, 235, 30, 0.089);
 }
-.vc-day{
-  border: 1px solid rgba(0, 0, 0, 0.103);
-  border-radius: 5px;
+.custom-calendar.vc-container ::v-deep(.weekday-1) {
+  background-color: rgba(201, 26, 26, 0.089);
 }
-.day-container {
+.custom-calendar.vc-container ::v-deep(.weekday-7) {
+  background-color: rgba(26, 175, 201, 0.089);
 }
-.day-header {
-  border-bottom: 1px solid rgb(0, 0, 0);
-}
-.is-not-in-month {
+.custom-calendar.vc-container ::v-deep(.is-not-in-month) {
   background-color: rgba(168, 168, 168, 0.253);
 }
-.task-right-end {
-  border-bottom: 1px solid rgba(61, 60, 60, 0.438);
-  border-right: 1px solid rgba(61, 60, 60, 0.438);
-}
-.task-left-end {
-  border-bottom: 1px solid rgba(61, 60, 60, 0.438);
-  border-left: 1px solid rgba(61, 60, 60, 0.438);
+.custom-calendar.vc-container ::v-deep(.is-not-in-month) {
+  background-color: rgba(168, 168, 168, 0.253);
 }
 .task-center {
   border: 1px solid rgba(61, 60, 60, 0.438);
   border-radius: 5px;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
   margin-bottom: 3px;
+  font-size: small;
 }
 .task-top {
   border-top: 1px solid rgba(61, 60, 60, 0.438);
