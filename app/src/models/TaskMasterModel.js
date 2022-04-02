@@ -8,20 +8,33 @@ export default class TaskMasterModel {
     end;
     intervalType;
     intervalNumber;
+    /**
+     * 対象日付を含む1タスクの開始日を計算します
+     * @param {Date} date
+     * @returns 開始日
+     */
     getStartOfTargetDate(date) {
         let start = new Date(this.start);
         start = new Date(start.getFullYear(), start.getMonth(), start.getDate());
         let intervalNumber = this.__intervalNumber();
-        const x = Math.trunc(((date - start) / 24 / 60 / 60 / 1000) / intervalNumber);
+        const baseDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+        const x = Math.trunc(((baseDate - start) / 24 / 60 / 60 / 1000) / intervalNumber);
         const todayStart = x * intervalNumber;
         start.setTime(start.getTime() + todayStart * 24 * 60 * 60 * 1000);
         return start;
     }
+    /**
+     * 対象日付を含む1タスクの終了日を計算します
+     * @param {Data} date 
+     * @returns 終了日
+     */
     getEndOfTargetDate(date) {
         let start = new Date(this.start);
         //yyyy/MM/dd 以降を切り落とす
         start = new Date(start.getFullYear(), start.getMonth(), start.getDate());
-        const end = new Date(this.start);
+        let end = new Date(this.start);
+        //yyyy/MM/dd 以降を切り落とす
+        end = new Date(end.getFullYear(), end.getMonth(), end.getDate());
 
         //yyyy/MM/dd 以降を切り落とす
         const baseDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
@@ -33,6 +46,11 @@ export default class TaskMasterModel {
         end.setTime(end.getTime() + todayEnd * 24 * 60 * 60 * 1000);
         return end;
     }
+    /**
+     * 対象日付を含む期間があと何日で終了するかを計算します
+     * @param {Date} date 
+     * @returns 終了までの残り日数
+     */
     getDaysLeft(date){
         let end = this.getEndOfTargetDate(date);
         end = new Date(end.getFullYear(), end.getMonth() , end.getDate());

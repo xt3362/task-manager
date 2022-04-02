@@ -14,13 +14,24 @@ const updateDisplayDate = async (calendarDate) => {
     const taskEnd = new Date(task.end);
     const days = (taskEnd - taskStart) / (24 * 60 * 60 * 1000) + 1;
     return [...Array(days).keys()].map(i => {
+      const cursorDate = new Date(taskStart.getFullYear(), taskStart.getMonth(), taskStart.getDate() + i);
+      const taskEndDate = task.getEndOfTargetDate(cursorDate);
+      const taskStartDate = task.getStartOfTargetDate(cursorDate);
+      let className = "task-between";
+      if(cursorDate.getTime() == taskStartDate.getTime() && cursorDate.getTime() == taskEndDate.getTime()){
+        className = "task-center";
+      }else if(cursorDate.getTime() == taskStartDate.getTime()){
+        className = "task-start";
+      }else if(cursorDate.getTime() == taskEndDate.getTime()){
+        className = "task-end";
+      }
       return {
         key: task.id,
         customData: {
           title: task.name,
-          class: 'task-center'
+          class: className
         },
-        dates: new Date(taskStart.getFullYear(), taskStart.getMonth(), taskStart.getDate() + i)
+        dates: cursorDate
       }
     });
   });
@@ -55,7 +66,7 @@ const updateDisplayDate = async (calendarDate) => {
 
 <style scoped>
 .custom-calendar.vc-container ::v-deep(.vc-day) {
-  border: 1px solid rgba(0, 0, 0, 0.103);
+  border: 1px solid rgba(0, 0, 0, 0.030);
   border-radius: 1px;
   height: 12vh;
 }
@@ -75,14 +86,33 @@ const updateDisplayDate = async (calendarDate) => {
   background-color: rgba(168, 168, 168, 0.253);
 }
 .task-center {
-  border: 1px solid rgba(61, 60, 60, 0.438);
+  border: 1px solid rgba(61, 60, 60, 0.15);
   border-radius: 5px;
   margin-left: 5px;
   margin-right: 5px;
   margin-bottom: 3px;
   font-size: small;
 }
-.task-top {
-  border-top: 1px solid rgba(61, 60, 60, 0.438);
+.task-start {
+  border-top: 1px solid rgba(36, 36, 36, 0.15);
+  border-bottom: 1px solid rgba(36, 36, 36, 0.15);
+  border-left: 1px solid rgba(36, 36, 36, 0.15);
+  margin-bottom: 1px;
+  margin-left: 5px;
+  font-size: small;
+}
+.task-between {
+  border-top: 1px solid rgba(36, 36, 36, 0.15);
+  border-bottom: 1px solid rgba(36, 36, 36, 0.15);
+  margin-bottom: 1px;
+  font-size: small;
+}
+.task-end {
+  border-top: 1px solid rgba(36, 36, 36, 0.15);
+  border-bottom: 1px solid rgba(36, 36, 36, 0.15);
+  border-right: 1px solid rgba(36, 36, 36, 0.15);
+  margin-bottom: 1px;
+  margin-right: 5px;
+  font-size: small;
 }
 </style>

@@ -20,7 +20,6 @@ class TaskMasterRepository {
         }
     }
     async getByDate(date) {
-        console.log(formatDate(date));
         try {
             return await db.taskMasters
                 .where('start')

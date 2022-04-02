@@ -3,13 +3,14 @@ import { onMounted, watch, ref } from 'vue';
 import TaskModel from '../../models/TaskModel';
 import { taskMasterRepository } from '../../repositories/TaskMasterRepository';
 import { taskRepository } from '../../repositories/TaskRepository';
-const targetDate = ref(new Date());
+const targetDate = ref(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()));
 const inprogressTasks = ref([]);
 const completedTasks = ref([]);
 
 const loadTask = async () => {
     const taskMasters = await taskMasterRepository.getByDate(targetDate.value);
     const tasks = await taskRepository.getByDate(targetDate.value);
+    console.log(tasks);
     const cTasks = new Array();
     const pTasks = new Array();
     taskMasters.map((taskMaster) => {
@@ -59,13 +60,17 @@ onMounted(async () => {
                 <div class="tile is-child box">
                     <div class="tile is-child">{{ task.name }}</div>
                     <div class="tile is-child">{{ task.content }}</div>
-                    <div class="tile is-child">{{ daysLeftMessage(task.getDaysLeft(targetDate)) }}</div>
-                    <footer class="tile">
-                        <button
-                            type="button"
-                            class="button is-primary"
-                            @click="completeTask(task)"
-                        >完了</button>
+                    <footer class="tile is-child columns">
+                        <div class="column is-3">
+                            <button
+                                type="button"
+                                class="button is-primary"
+                                @click="completeTask(task)"
+                            >完了</button>
+                        </div>
+                        <div class="column is-9">
+                            <span>{{ daysLeftMessage(task.getDaysLeft(targetDate)) }}</span>
+                        </div>
                     </footer>
                 </div>
             </div>

@@ -30,7 +30,7 @@ class TaskRepository {
             return await db.tasks
                 .where('start')
                 .belowOrEqual(dateString)
-                .and(item => Date.parse(item.end) >= Date.parse(dateString))
+                .and(item => Date.parse(item.end) >= date)
                 .toArray();
         } catch {
             throw Error("error 'getByDate task'");
